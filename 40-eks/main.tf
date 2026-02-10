@@ -2,7 +2,8 @@
 # ssh-keygen -f eks
 resource "aws_key_pair" "eks" {
     key_name = "eks"
-    public_key = file("~/.ssh/eks.pub")
+    # public_key = file("~/.ssh/eks.pub")
+    public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvkEgHpGshCaMP1EJGk9fUMuT2pNjbqsR0fAYr46029 PC@Mln-desktop"
 }
 
 # eks cluster
