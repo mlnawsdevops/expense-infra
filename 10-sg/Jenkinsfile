@@ -15,14 +15,15 @@ pipeline{
 
     stages{
         stage('init and plan'){
-            withAWS(region: 'us-east-1', credentials: 'aws-auth'){
-                sh """
-                    cd 10-sg
-                    terraform init -reconfigure
-                    terraform plan -out=tfplan
-                """
+            steps{
+                withAWS(region: 'us-east-1', credentials: 'aws-auth'){
+                    sh """
+                        cd 10-sg
+                        terraform init -reconfigure
+                        terraform plan -out=tfplan
+                    """
+                }
             }
-
         }
     }
 }
