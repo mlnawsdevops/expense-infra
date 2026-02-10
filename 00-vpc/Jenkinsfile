@@ -1,0 +1,10 @@
+pipeline{
+    agent{
+        label 'AGENT-1'
+    }
+    optional{
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+    }
+}
