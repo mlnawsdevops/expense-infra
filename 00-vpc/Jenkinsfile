@@ -9,11 +9,13 @@ pipeline{
         ansiColor('xterm')
     }
 
+    // global variables
     parameters{
         choice(name: 'ACTION', choices: ['apply','destroy'], description: 'select action')
     }
 
     stages{
+        // terraform init and plan 
         stage('Init and Plan'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
@@ -26,10 +28,11 @@ pipeline{
             }
         }
 
+        // terraform apply or destroy
         stage('APPLY or DESTROY'){
             input{
                 message "Should we continue to ${params.ACTION}"
-                ok, "yes, we should"
+                ok "yes, we should."
             }
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
