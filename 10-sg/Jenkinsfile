@@ -63,12 +63,12 @@ pipeline{
             parallel{
                 stage('bastion'){
                     steps{
-                        build job: '20-bastion', parameters: [(name: 'ACTION', value: 'apply')], wait: false
+                        build job: '20-bastion', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
                 }
                 stage('eks'){
                     steps{
-                        build job: '40-eks', parameters: [(name: 'ACTION', value: 'apply')], wait: false
+                        build job: '40-eks', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
                 }
             }
