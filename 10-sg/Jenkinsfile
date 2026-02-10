@@ -47,5 +47,15 @@ pipeline{
                 }
             }
         }
+
+        // destroy 00-vpc when 10-sg is destroying
+        stage('Destroy vpc'){
+            when {
+                expression { params.ACTION == "destroy" }
+            }
+            steps{
+                build job: '00-vpc', parameters: [string(name: 'ACTION', value: "destroy")], wait: false
+            }
+        }
     }
 }
