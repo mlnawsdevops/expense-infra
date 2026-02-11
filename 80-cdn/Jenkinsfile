@@ -28,7 +28,7 @@ pipeline{
 
         stage('apply or destroy'){
             steps{
-                withAWS(region: 'us-east-1', credentials: 'aws-auth'){
+                withAWS(region: 'us-east-1', credentials: 'aws-creds'){
                     sh """
                         cd 80-cdn
                         if [ "${params.ACTION}" == "apply" ]
