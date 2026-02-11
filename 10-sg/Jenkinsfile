@@ -59,10 +59,10 @@ pipeline{
         }
 
         // trigger other pipelines when 10-sg is applied
-        stage(parallel){
+        stage('parallel'){
 
             when{
-                expression { params.ACTION = 'apply' }
+                expression { params.ACTION == 'apply' }
             }
 
             parallel{
@@ -85,7 +85,7 @@ pipeline{
 
                 stage('ecr'){
                     steps{
-                        build job: '70-ecr', parameters: [string(name: 'ACTION', vlaues: 'apply')], wait: false
+                        build job: '70-ecr', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
                 }
             }
