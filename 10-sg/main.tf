@@ -142,7 +142,7 @@ resource "aws_security_group_rule" "eks_control_plane_node_443" {
   security_group_id        = module.eks_control_plane_sg.id  
 }
 
-resource "aws_security_group_rule" "mysql_bastion" {
+resource "aws_security_group_rule" "mysql_bastion_22" {
     type = "ingress"
     from_port = 22
     to_port = 22
