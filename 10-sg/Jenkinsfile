@@ -91,23 +91,24 @@ pipeline{
             }
         }
         stage('Sequential') {
-        when {
-            expression { params.ACTION == 'apply' }
-        }
-        stages {
-            stage('ACM') {
-                steps {
-                    build job: '50-acm', parameters: [string(name: 'ACTION', value: "apply")]
-                }
+            when {
+                expression { params.ACTION == 'apply' }
             }
-            stage('ALB') {
-                steps {
-                    build job: '60-alb', parameters: [string(name: 'ACTION', value: "apply")], wait: false
+            stages {
+                stage('ACM') {
+                    steps {
+                        build job: '50-acm', parameters: [string(name: 'ACTION', value: "apply")]
+                    }
                 }
-            }
-            stage('CDN') {
-                steps {
-                    build job: '80-cdn', parameters: [string(name: 'ACTION', value: "apply")], wait: false
+                stage('ALB') {
+                    steps {
+                        build job: '60-alb', parameters: [string(name: 'ACTION', value: "apply")], wait: false
+                    }
+                }
+                stage('CDN') {
+                    steps {
+                        build job: '80-cdn', parameters: [string(name: 'ACTION', value: "apply")], wait: false
+                    }
                 }
             }
         }
