@@ -42,9 +42,9 @@ pipeline{
                 }
             }
         }
-    }
 
-    stage('Destroy'){
+        // destroying all pipelines
+        stage('Destroy'){
             when {
                 expression { params.ACTION == 'destroy' }
             }
@@ -65,6 +65,8 @@ pipeline{
                 }
             }
         }
+
+    }
 
     post{
         always{
