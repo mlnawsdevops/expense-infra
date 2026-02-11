@@ -9,18 +9,17 @@ pipeline{
         ansiColor('xterm')
     }
 
-    // global variables
     parameters{
-        choice(name: 'ACTION', choices: ['apply','destroy'], description: 'select action')
+        choice(name: 'ACTION', choices: ['apply','destroy'], description: 'select action'){
+        }
     }
 
     stages{
-        // terraform init and plan 
-        stage('Init and Plan'){
+        stage('init and plan'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
                     sh """
-                        cd 00-vpc
+                        cd 50-acm
                         terraform init -reconfigure
                         terraform plan -out=tfplan
                     """
@@ -28,19 +27,14 @@ pipeline{
             }
         }
 
-        // terraform apply or destroy
-        stage('APPLY or DESTROY'){
-            input{
-                message "Should we continue to ${params.ACTION}"
-                ok "yes, we should."
-            }
+        stage('apply or destroy'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
                     sh """
-                        cd 00-vpc
+                        cd 50-acm
                         if [ "${params.ACTION}" == "apply" ]
                         then
-                            terraform apply -auto-approve tfplan
+                            terraform apply -auto-approve
                         elif [ "${params.ACTION}" == "destroy" ]
                         then
                             terraform destroy -auto-approve
@@ -49,18 +43,8 @@ pipeline{
                 }
             }
         }
-
-        // trigger 10-sg folder
-        stage('TRIGGER SG'){
-            when {
-                expression { params.ACTION == 'apply' }
-            }
-            steps{
-                build job: '10-sg', parameters: [string(name: 'ACTION', value: "apply")], wait: false
-            }
-        }
     }
-
+    
     post{
         always{
             echo "This section runs always"
