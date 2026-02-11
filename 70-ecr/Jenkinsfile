@@ -5,8 +5,8 @@ pipeline{
 
     options{
         timeout(time: 30, unit:'MINUTES')
-        diableConcurrentBuilds()
-        ansiColor()
+        disableConcurrentBuilds()
+        ansiColor('xterm')
     }
 
     parameters{
@@ -35,6 +35,7 @@ pipeline{
                         then
                             terraform apply -auto-approve
                         elif [ "${params.ACTION}" == "destroy" ]
+                        then
                             terraform destroy -auto-approve
                         fi
                     """
