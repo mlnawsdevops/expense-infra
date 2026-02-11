@@ -90,9 +90,7 @@ pipeline{
                 }
             }
         }
-    }
-
-    stage('Sequential') {
+        stage('Sequential') {
         when {
             expression { params.ACTION == 'apply' }
         }
