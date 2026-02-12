@@ -133,7 +133,7 @@ resource "aws_lb_target_group" "expense" {
     unhealthy_threshold = 2
     interval = 5
     matcher = "200-299"
-    path = "/health"
+    path = "/"
     port = 8080 // 80 port- non root prvileges user running container are not able to open system ports which are 1024
     protocol = "HTTP"
     timeout = 4
