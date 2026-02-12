@@ -111,7 +111,8 @@ eksctl create iamserviceaccount \
 ```
 helm repo add eks https://aws.github.io/eks-charts
 ```
-cluster_vpc-id
+
+* cluster_vpc-id
 ```
 aws eks describe-cluster \
   --name expense-dev \
@@ -119,10 +120,12 @@ aws eks describe-cluster \
   --output text
 ```
 
+* check aws-load-balancer-controller serviceaccount is there or not
 ```
 kubectl get sa aws-load-balancer-controller -n kube-system
 ```
 
+* install aws-load-balancer-controller
 ```
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=expense-dev --set serviceAccount.create=true --set serviceAccount.name=aws-load-balancer-controller --vpc=<cluster_vpc-id>
 
@@ -141,8 +144,8 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 ```
 kubectl get pods -n kube-system
 NAME                                            READY   STATUS    RESTARTS   AGE
-aws-load-balancer-controller-689495d45f-mwmg6   0/1     Running   0          8s
-aws-load-balancer-controller-689495d45f-v78wh   0/1     Running   0          8s
+aws-load-balancer-controller-689495d45f-mwmg6   1/1     Running   0          8s
+aws-load-balancer-controller-689495d45f-v78wh   1/1     Running   0          8s
 aws-node-txwjc                                  2/2     Running   0          5m13s
 aws-node-v9d79                                  2/2     Running   0          5m17s
 coredns-789f8477df-55j2d                        1/1     Running   0          9m52s
