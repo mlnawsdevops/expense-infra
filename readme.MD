@@ -120,6 +120,8 @@ aws eks describe-cluster \
 ```
 
 ```
+kubectl get sa aws-load-balancer-controller -n kube-system
+```
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=expense-dev --set serviceAccount.create=true --set serviceAccount.name=aws-load-balancer-controller --vpc=<cluster_vpc-id>
 
 or
